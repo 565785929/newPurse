@@ -1,0 +1,538 @@
+
+
+
+
+#币种信息/转账
+### 2.8.1. coin/coins：获取全部币种信息
+
+- Request Url:baseUrl +/coin/coins
+- method: POST
+- parameter:
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|token  |操作请求token 过期后需要重新获取 | string|
+|uid |用户ID |number|
+|local   |  语种 ，繁体中文，可选zh_TW、en | string |
+
+- response description ：当接口返回的status为200时，则attachment包含以下数据，如果status参 数不为200，则出现异常。
+- example
+
+```
+{
+	"attachment":[
+		{
+		"currencyId":1,
+		"currencyName":"BitCoin",
+		"currencyNameEn":"BTC",
+		"icoUrl":"coinimg/btc.png",
+		"pointPrice":"6","pointNum":"4"
+		},
+		{
+		"currencyId":2,
+		"currencyName":"Litecoin",
+		"currencyNameEn":"LTC",
+		"icoUrl":"coinimg/ltc.png",
+		"pointPrice":"8",
+		"pointNum":"4"
+		},
+		{
+		"currencyId":3,
+		"currencyName":"Ethereum",
+		"currencyNameEn":"ETH",
+		"icoUrl":"coinimg/eth.png",
+		"pointPrice":"8",
+		"pointNum":"4"
+		}
+	],
+"message":null,
+"status":200
+}
+```
+
+
+
+### 2.8.1. coin/customerCoinByOneCoin：获取单个币种余额
+
+- Request Url:baseUrl +/coin/customerCoinByOneCoin
+- method: POST
+- parameter:
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|token  |操作请求token 过期后需要重新获取 | string|
+|uid |用户ID |number|
+|currencyId |币种id |number|
+|local   |  语种 ，繁体中文，可选zh_TW、en | string |
+
+- response description ：当接口返回的status为200时，则attachment包含以下数据，如果status参 数不为200，则出现异常。
+- example
+
+```
+{
+    "attachment": 10000000.0000000000000000,
+    "message": null,
+    "status": 200
+}
+```
+
+
+
+
+
+
+
+
+#### 2.5.1.11. coin/selectUserAddress：查询当前币种充币信息及二维码
+
+- Request Url:baseUrl +/coin/selectUserAddress
+- method: POST
+- parameter:
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|walletType |钱包类型 | int|
+|currentyId |币种id |int|
+|token  |操作请求token 过期后需要重新获取 | string|
+|uid |用户ID |number|
+|local   |  语种 ，繁体中文，可选zh_TW、en | string |
+
+- response description ：当接口返回的status为200时，则attachment包含以下数据，如果status参 数不为200，则出现异常。
+- example
+
+```
+{
+	"attachment":{
+		"imgage":"VBORw0KGgoAAAANSUhEUgAAAMgAAADICAIAAAAiOjnJAAADp0lEQVR42u3bQW4b",
+		"confirmNum":6,
+		"address":"Pause recharge, please understand.",
+		"fee":"0.00000000",
+		"msgCode":"1"
+		},
+	"message":null,
+	"status":200
+}
+```
+
+
+
+
+
+
+
+#### 2.5.1.5. coin/selectTakeCoin：提币前相关信息查询
+
+- Request Url:baseUrl +/coin/selectTakeCoin
+- method: POST
+- parameter:
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|currencyId  | 币种Id|  int|
+|token  |操作请求token 过期后需要重新获取 | string|
+|uid |用户ID |number|
+|local   |  语种 | string |
+
+- local 语种
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|zh_TW  | 繁体中文 | string|
+|en_US  | 英文 | string|
+
+- response description ：当接口返回的status为200时，则attachment包含以下数据，如果status参 数不为200，则出现异常。
+- response_data:
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|resp|	提现账户以及地址相关信息|	object|
+|addressList|	提现地址列表|	object|
+|defaultAddress|	默认提现地址，默认选中列表第一个|	object|
+|detail|	提现费用相关详细内容|	object|
+
+- resp内容
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|addressList|	提现地址列表|	string|
+|fee|	手续费费率	|string|
+|cashAmount|	账户可用数量	|string|
+|point|	小数位数|	int|
+|msgCode|	显示不显示标志|	string|
+
+- msgCode内容
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|0    |	显示 |	int|
+|1    |	不显示  |  int|
+
+- addressList内容
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|note|	备注标签|	string|
+|address|	地址	|string|
+|id|	地址唯一id	|string|
+
+- defaultAddress内容
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|note|	备注标签|	string|
+|address|	地址	|string|
+|id|	地址唯一id	|string|
+
+- detail内容
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|start|	起点，默认0|	int|
+|size|	条数	|int|
+|linkId|	币种提币设置自增长id	|string|
+|currencyId|	币种ID|	int|
+|currencyName|	币种英文名简称|	int|
+|amountLowLimit|	最低提币数量|	decimal|
+|amountHighLimit|	最高提币数量|	decimal|
+|feeType|	手续费类型|	int|
+|fee|	手续费|	decimal|
+|riskHighAmount|	单笔最大值|	decimal|
+|status|	状态|	int|
+|actionStatus|	操作状态|	int|
+|createTime|	创建时间|	date|
+|createBy|	创建人|	string|
+|lastEditTime|	最后修改时间|	date|
+|lastEditBy|	最后修改人|	string|
+|riskSingleDayCumulativeMaximum|	单日累计风控最大值|	decimal|
+|riskSingleDayCumulativeMaxtimes|	单日累计风控最大次数|	int|
+
+- status 状态
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|0    |	未上线 |	int|
+|1    |	已上线 |	int|
+|2    |	已下线 |  int|
+
+- feeType 手续费类型
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|1    |	固定额度 |	int|
+|2    |	百分比  |  int|
+
+- actionStatus 操作状态
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|1    |	正常 |	int|
+|2    |	停用  |  int|
+
+- example
+
+```
+{
+	"attachment": {
+		"resp": {
+			"addressList": [{
+				"note": "test",
+				"address": "0xF4A14010ACBE82428516415A117B157B59cc6bB3",
+				"id": "35140"
+			}],
+			"fee": 0.005,
+			"cashAmount": 4168.7807184,
+			"point": 8,
+			"msgCode": "1",
+			"defaultAddress": {
+				"note": "test",
+				"address": "0xF4A14010ACBE82428516415A117B157B59cc6bB3",
+				"id": "35140"
+			}
+		},
+		"detail": {
+			"start": 0,
+			"size": 10,
+			"linkId": 327,
+			"currencyId": 70,
+			"currencyName": "CHEX",
+			"actionId": 4,
+			"actionName": "提币",
+			"amountLowLimit": 50.0,
+			"amountHighLimit": 9.9999999E7,
+			"feeType": 2,
+			"fee": 0.005,
+			"riskHighAmount": 560000.0,
+			"status": 1,
+			"actionStatus": 1,
+			"createTime": "2018-05-15 10:46:06.0",
+			"createBy": "admin",
+			"lastEditTime": "2018-07-23 17:08:16.0",
+			"lastEditBy": "zhangwengang",
+			"riskSingleDayCumulativeMaximum": 2800000.0,
+			"riskSingleDayCumulativeMaxtimes": 5
+		}
+	},
+	"message": null,
+	"status": 200
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+#### 2.5.1.6. coin/emailTakeCoinV2：提币发送邮箱验证码
+
+- Request Url:baseUrl +/coin/emailTakeCoinV2
+- method: POST
+- parameter:
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|type  |验证方式| string|
+|token  |操作请求token 过期后需要重新获取 | string|
+|uid |用户ID |number|
+|local   |  语种 | string |
+
+- type 验证方式
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|1      |邮箱验证   |  int |
+|2      |手机验证   |  int |
+
+- local 语种
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|zh_TW  | 繁体中文 | string|
+|en_US  | 英文 | string|
+
+- response description ：当接口返回的status为200时，则attachment包含以下数据，如果status参数不为200，则出现异常。
+- example
+
+```
+{
+	"attachment": null,
+	"message": null,
+	"status": 200
+}
+```
+
+#### 2.5.1.7. coin/insertTakeAddress：添加提币地址
+
+- Request Url:baseUrl +/coin/insertTakeAddress
+- method: POST
+- parameter:
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|currencyId  |币种Id | int|
+|address  |提币地址 | string|
+|note  |备注 | string|
+|token  |操作请求token 过期后需要重新获取 | string|
+|uid |用户ID |number|
+|local   |  语种 | string |
+
+- local 语种
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|zh_TW  | 繁体中文 | string|
+|en_US  | 英文 | string|
+
+- response description ：当接口返回的status为200时，则attachment包含以下数据，如果status参数不为200，则出现异常。
+- status
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|200| 操作成功 |int |
+|468| 交易密碼錯誤 |int |
+|1007| 提幣地址不合法 |int |
+|1010| 該地址為充幣地址 |int |
+
+- example
+
+```
+// 正确
+{
+	"attachment": 1,
+	"message": null,
+	"status": 200
+}
+// 交易密碼錯誤
+{
+	"attachment": null,
+	"message": “交易密碼錯誤”,
+	"status": 468
+}
+
+// 提幣地址不合法
+{
+	"attachment": null,
+	"message": “提幣地址不合法”,
+	"status": 1007
+}
+
+// 該地址為充幣地址
+{
+	"attachment": null,
+	"message": “該地址為充幣地址”,
+	"status": 1010
+}
+```
+
+#### 2.5.1.8. coin/updateCoinAddress：删除提币地址
+
+- Request Url:baseUrl +/coin/updateCoinAddress
+- method: POST
+- parameter:
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|currencyId  |币种Id | int|
+|walletAddressId  |提币地址Id | string|
+|token  |操作请求token 过期后需要重新获取 | string|
+|uid |用户ID |number|
+|local   |  语种 | string |
+
+- local 语种
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|zh_TW  | 繁体中文 | string|
+|en_US  | 英文 | string|
+
+- response description ：当接口返回的status为200时，则attachment包含以下数据，如果status参数不为200，则出现异常。
+- status
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|200| 操作成功 |int |
+
+- example
+
+```
+{
+	"attachment": null,
+	"message": null,
+	"status": 200
+}
+```
+
+
+#### 2.5.1.9. coin/takeCoinV2：提币
+
+- Request Url:baseUrl +/coin/takeCoinV2
+- method: POST
+- parameter:
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|amount  |提币数量 | string|
+|actionId  |4:表示提币 | string|
+|currencyId  |币种Id | string|
+|fdPwd  |交易密码 | string|
+|emailCode  |验证码 | string|
+|gAuth  |谷歌验证码 | string|
+|token  |操作请求token 过期后需要重新获取 | string|
+|uid |用户ID |number|
+|local   |  语种 | string |
+
+
+- local 语种
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|zh_TW  | 繁体中文 | string|
+|en_US  | 英文 | string|
+
+- response description ：当接口返回的status为200时，则attachment包含以下数据，如果status参数不为200，则出现异常。
+- status
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|200| 发起提币成功 |int |
+|402| 驗證碼過期 |int |
+|403| 驗證碼錯誤 |int |
+|468| 交易密碼錯誤 |int |
+|10022| 谷歌認證失敗 |int |
+
+- example
+
+```
+// 发起提币成功
+{
+	"attachment": null,
+	"message": “发起提币成功”,
+	"status": 200
+}
+// 驗證碼過期
+{
+	"attachment": null,
+	"message": “驗證碼過期”,
+	"status": 402
+}
+
+// 驗證碼錯誤
+{
+	"attachment": null,
+	"message": “驗證碼錯誤”,
+	"status": 403
+}
+
+// 交易密碼錯誤
+{
+	"attachment": null,
+	"message": “交易密碼錯誤”,
+	"status": 468
+}
+
+// 谷歌認證失敗
+{
+	"attachment": null,
+	"message": “谷歌認證失敗”,
+	"status": 10022
+}
+```
+
+#### 2.5.1.10. coin/selectTakeList：提现记录
+
+- Request Url:baseUrl +/coin/selectTakeList
+- method: POST
+- parameter:
+
+|Item      |description  |type   |
+| -------- | :-----:|  :-------:  |
+|status  |提现状态  |  int|
+|start  |起点  |int|
+|size  |数量  |int|
+|currencyId |币种id |int|
+|beginTime| 开始日期 格式：2018-05-30 | string|
+|endTime |结束日期 格式：2018-05-31 | string |
+|token  |操作请求token 过期后需要重新获取 | string|
+|uid |用户ID |number|
+|local   |  语种 ，繁体中文，可选zh_TW、en | string |
+
+- response description ：当接口返回的status为200时，则attachment包含以下数据，如果status参 数不为200，则出现异常。
+- example
+
+```
+{
+	"attachment":{
+		"total":0,
+		"sumMoney":0,
+		"list":[]
+		},
+	"message":null,
+	"status":200
+}
+```
+
